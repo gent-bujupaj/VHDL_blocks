@@ -71,7 +71,7 @@ begin
 	begin
 		case digit is
 			when "0000" => -- 
-			seg <= "0000001"; --0  MSB is the a of the 7seg, LSB is the g of the 7seg 
+			seg <= "0000001"; --0  MSB is the a of the 7seg, LSB is the g of the 7seg
 			when "0001" =>
 			seg <= "1001111"; --1  
 			when "0010" =>
