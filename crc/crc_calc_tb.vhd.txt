@@ -1,0 +1,97 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 02/05/2023 04:46:13 PM
+-- Design Name: 
+-- Module Name: crc_calc_tb - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity crc_calc_tb is
+--  Port ( );
+end crc_calc_tb;
+
+architecture Behavioral of crc_calc_tb is
+
+component crc_rtl is 
+
+  Port ( 
+    clk : IN std_logic;
+  reset_n : IN std_logic;
+  enable  : IN std_logic;
+  data_in : IN std_logic_vector(15 downto 0);
+  crc_out : OUT std_logic_vector(15 downto 0)
+  );
+  
+end component;
+
+    constant CLK_PERIOD	: time := 10 ns;
+    signal data_in:      std_logic_vector(15 downto 0);
+    signal reset_n :     std_logic;
+    signal clk :         std_logic; --clock
+   
+    signal crc_out :    std_logic_vector(15 downto 0);     
+    signal enable :     std_logic;
+
+begin
+    utt : crc_rtl port map (
+        clk => clk,
+        reset_n => reset_n,
+	    enable => enable,
+	    data_in => data_in,
+	    crc_out => crc_out
+	    
+    );
+    
+    clk_gen	: process
+	begin
+		clk <= '1';
+		wait for CLK_PERIOD;
+		clk <= '0';
+		wait for CLK_PERIOD;
+	end process;
+
+	stimuli : process 
+	begin 
+	 enable <= '0';
+	 reset_n <= '1';
+     wait for 2*CLK_PERIOD;
+     reset_n <= '0';
+     wait for 2*CLK_PERIOD;
+     enable <= '1';
+     data_in <= "0000000000000001";
+     wait for 2*CLK_PERIOD;
+     enable <= '0';
+     
+     wait;
+	
+	
+	
+	
+	end process;
+
+end Behavioral;
